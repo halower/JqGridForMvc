@@ -4,16 +4,18 @@ JqGridForMvc is most simple and popular JqGrid plugin that can be used to quickl
 Here is a simple example, but JqgridForMvc has supported the most common Jqgrid operation, there is time to do supplementary examples
 ```
 <script id="testTmp" type="text/html">                                 
-    <button class="btn btn-sm btn-danger" onclick="alert('{\{name}}')">{\{name}}</button>                                 
+    <button class="btn btn-sm btn-danger" onclick="alert('{{name}}')">{{name}}</button>                                 
 </script>                                   
-<script>                                  
-   //此处的建议放在模块中                                 
+<script>                                                             
     function inlineHtmlTest(cellvalue, options, rowObject) {                                    
         return halower.template('testTmp', { name: rowObject[1] });                                    
-    }                                   
-    //自适应表格                                    
-    halower.resizeGrid('userlistGrid');                                 
-</script>                               
+    }                                                             
+</script>   
+
+@model GBBMS.Service.User.UserDto
+@{
+    var g = Html.JqGridKit();
+}
 <div class="row GBBMSGrid" style="margin-top: 10px">                              
     @(                                  
     g.JqGrid("userlistGrid", g.Param(p => p.Id)).MainGrid(                                
