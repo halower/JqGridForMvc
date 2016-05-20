@@ -1,0 +1,32 @@
+﻿@using HalowerHub.JqGrid
+@model JQgridTest.Models.Person
+@{
+    Layout = null;
+    var g = Html.JqGridKit();
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+    <link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet"/>
+    <link href="~/Content/jquery.jqGrid/jquery-ui.theme.css" rel="stylesheet" />
+    <script src="~/scripts/jquery-1.9.1.js"></script>
+    <script src="~/scripts/jquery-ui-1.10.0.js"></script>
+    <script src="~/scripts/jquery.jqGrid.js"></script>
+    <script src="~/scripts/i18n/grid.locale-cn.js"></script>
+</head>
+<body style="margin:20px 100px">
+    @(g.JqGrid("testJqGrid", g.Param(p => p.Id)).MainGrid(
+      g.GridColumn(x => x.Id, 300),
+      g.GridColumn(x => x.Name, 300),
+      g.GridColumn(x => x.Password, 300))
+      .Caption("JqGrid测试").Height("250")
+      .Url(Url.Action("PersonListData"))
+      .PerClearCache().BuiltInOperation(GridOperators.Refresh)
+      .Pager())
+</body>
+</html>
