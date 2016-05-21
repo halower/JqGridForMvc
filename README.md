@@ -1,6 +1,9 @@
 # JqGridForMvc
 JqGridForMvc is most simple and popular JqGrid plugin that can be used to quickly create a commercial request form. We are also pursuing: "write less, do more", if you have any questions or help with it you can send email to me or contact me
-#Demo
+#Installation
+``` Install-Package HalowerHub.Jqgrid```
+#Sample Code
+![](http://images.cnitblog.com/blog/360406/201502/081159015477052.gif)
 Here is a simple example, but JqgridForMvc has supported the most common Jqgrid operation, there is time to do supplementary examples
 ```
 <script id="testTmp" type="text/html">                                 
