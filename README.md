@@ -33,10 +33,8 @@ Here is a simple example, but JqgridForMvc has supported the most common Jqgrid 
         .BuiltInOperation(GridOperators.Refresh | GridOperators.Search | GridOperators.Add)                                  
     )                               
 </div>
-
-or
-![](http://images.cnitblog.com/blog2015/360406/201503/160929184381770.png)
 ```
+![](http://images.cnitblog.com/blog2015/360406/201503/160929184381770.png)
 #back-end -code(Only a word)
 ```
 public ContentResult UserListData()
