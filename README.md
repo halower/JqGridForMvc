@@ -34,6 +34,7 @@ Here is a simple example, but JqgridForMvc has supported the most common Jqgrid 
     )                               
 </div>
 ```
+or:SubGrid
 ![](http://images.cnitblog.com/blog2015/360406/201503/160929184381770.png)
 #back-end -code(Only a word)
 ```
