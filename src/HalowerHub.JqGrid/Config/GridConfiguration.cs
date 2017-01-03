@@ -194,6 +194,9 @@ namespace HalowerHub.JqGrid
 
         [JsonProperty("onSelectRow")]
         public string OnSelectRow { get; internal set; }
+
+        [JsonProperty("onSelectAll")]
+        public string OnSelectAll { get; internal set; }
         #endregion
     }
     #endregion

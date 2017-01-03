@@ -20,14 +20,15 @@ namespace HalowerHub.JqGrid
         /// </summary>
         /// <typeparam name="T">实体类</typeparam>
         /// <param name="list">数据集</param>
-        /// <param name="expression">过滤表达式</param>
         /// <param name="baseContent">控制器对象</param>
+        /// <param name="filter">过滤表达式</param>
+        /// <param name="order">排序表达式</param>
         /// <returns></returns>
-        public static string Pagination<T>(this IQueryable<T> list, Controller baseContent, Expression<Func<T, bool>> expression = null) where T : class
+        public static string Pagination<T>(this IQueryable<T> list, Controller baseContent, Expression<Func<T, bool>> filter = null, Expression<Func<T, object>> order = null) where T : class
         {
             var pageParams = RequestHelper.InitRequestParams(baseContent);
             var predicate = PredicateBuilder.True<T>();
-            if (expression != null) predicate = predicate.And(expression);
+            if (filter != null) predicate = predicate.And(filter);
             if (!string.IsNullOrEmpty(pageParams.Filters))
                 predicate = GridSearchPredicate.MultiSearchExpression<T>(pageParams.Filters);
             if (string.IsNullOrEmpty(pageParams.Filters) && !string.IsNullOrEmpty(pageParams.SearchField))
@@ -46,12 +47,13 @@ namespace HalowerHub.JqGrid
                 new
                 {
                     pageParams.PageIndex,
-                    records = list.Count(predicate.Compile()),
+                    records =order==null? list.Count(predicate.Compile()): list.OrderByDescending(order.Compile()).Count(predicate.Compile()),
                     rows = gridCells,
                     total = (Math.Ceiling((double)list.Count() / pageParams.PageSize))
                 }.ToSerializer();
             return result;
         }
+
         /// <summary>
         /// IList 接管
         /// </summary>

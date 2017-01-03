@@ -254,6 +254,17 @@ namespace HalowerHub.JqGrid
             GridConfiguration.OnSelectRow = "&" + onSelectRowFunc + "&";
             return this;
         }
+
+        /// <summary>
+        /// 所有行选中
+        /// </summary>
+        /// <param name="onSelectAllFunc"></param>
+        /// <returns></returns>
+        public GridGenerator<T> OnSelectAll(string onSelectAllFunc)
+        {
+            GridConfiguration.OnSelectAll = "&" + onSelectAllFunc + "&";
+            return this;
+        }
         /// <summary>
         ///     定义表格希望获得的数据的类型
         /// </summary>
@@ -476,7 +487,7 @@ namespace HalowerHub.JqGrid
             var cacheValue = GridConfiguration.PerClearCache ? null : CacheHelper.Get("JqGird_Config_" + _gridId);
             if (cacheValue != null)
             {
-                return cacheValue.ToString();
+                return cacheValue.ToString().Replace("\"&", "").Replace("&\"", "").Replace("\\", "");
             }//              
             string template = @"
               <!--该表格由HalwerHub.JqGrid自动生成,联系QQ:121625933-->
