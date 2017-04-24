@@ -1,4 +1,4 @@
-﻿/****************************************************
+/****************************************************
 ** 作者： Halower (QQ:121625933)
 ** 创始时间：2015-02-01
 ** 描述：jqGrid扩展分页
@@ -33,11 +33,10 @@ namespace HalowerHub.JqGrid
                 predicate = GridSearchPredicate.MultiSearchExpression<T>(pageParams.Filters);
             if (string.IsNullOrEmpty(pageParams.Filters) && !string.IsNullOrEmpty(pageParams.SearchField))
                 predicate = GridSearchPredicate.SingleSearchExpression<T>(pageParams.SearchField, pageParams.SearchOper,pageParams.SearchString);
-            var recordes = list.Where(predicate.Compile())
-                    .Skip((pageParams.PageIndex - 1)*pageParams.PageSize)
-                    .Take(pageParams.PageSize).ToList();
-                   
-            recordes.Sort(new GridListSort<T>( string.IsNullOrEmpty(pageParams.SortName) ? pageParams.Gridkey : pageParams.SortName,pageParams.Sord == "desc").Compare);
+            var temp =  list.Where(predicate.Compile()).ToList();
+            var compare = new GridListSort<T>(string.IsNullOrEmpty(pageParams.SortName) ? pageParams.Gridkey : pageParams.SortName, pageParams.Sord == "desc");
+            temp.Sort(compare.Compare);
+            var recordes = temp.Skip((pageParams.PageIndex - 1)*pageParams.PageSize).Take(pageParams.PageSize).ToList();      
             var gridCells = recordes.Select(p => new GridCell
             {
                 Id = p.GetType().GetProperty(pageParams.Gridkey).GetValue(p, null).ToString(),
@@ -47,9 +46,9 @@ namespace HalowerHub.JqGrid
                 new
                 {
                     pageParams.PageIndex,
-                    records =order==null? list.Count(predicate.Compile()): list.OrderByDescending(order.Compile()).Count(predicate.Compile()),
+                    records = temp.Count(predicate.Compile()),
                     rows = gridCells,
-                    total = (Math.Ceiling((double)list.Count() / pageParams.PageSize))
+                    total = (Math.Ceiling((double)temp.Count() / pageParams.PageSize))
                 }.ToSerializer();
             return result;
         }
